@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 require('dotenv').config();
 
-const URI = process.env.MONGO_URL
+const URI = "mongodb+srv://root:root@electiva.4plmob7.mongodb.net/?retryWrites=true&w=majority&appName=electiva"
 mongoose.set('strictQuery')
 
 mongoose.connect(URI)
