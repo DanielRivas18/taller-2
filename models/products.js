@@ -3,13 +3,13 @@ const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
 const schemaProducts = new Schema({
-  id: { type: String, required: true },
+  id: { type: String, required: true, unique: true }, // Asegúrate de que el campo 'id' sea único
   nombre: { type: String, required: true },
   inventario: { type: Number, required: true },
   tipo_producto: { type: String, required: true },
   fecha_vencimiento: { type: Date, default: null },
   precio: { type: Number, required: true },
-  fecha_ingreso: { type: Date, required: true },
+  fecha_ingreso: { type: Date, default: Date.now }, // Puedes establecer 'fecha_ingreso' como la fecha actual por defecto
   estado_actual: { type: String, default: 'No vencido' }
 });
 
