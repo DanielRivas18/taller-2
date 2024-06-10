@@ -27,14 +27,19 @@ module.exports = {
 
     create: async function(req, res) {
         try {
-            const { id } = req.body;
-            const existingProduct = await products.findOne({ id });
-            if (existingProduct) {
-                return res.status(400).json({ message: 'Product with this ID already exists' });
+            // Consulta el último producto para obtener su id y luego incrementa para el nuevo producto
+            const lastProduct = await Product.findOne().sort({ id: -1 });
+            let newId = 1; // Inicializa el nuevo id en 1 si no hay productos existentes
+            if (lastProduct) {
+                newId = lastProduct.id + 1;
             }
     
-            const newProduct = new products(req.body);
+            // Crea un nuevo objeto de producto con el nuevo id y los datos del cuerpo de la solicitud
+            const newProduct = new Product({ id: newId, ...req.body });
+    
+            // Guarda el nuevo producto en la base de datos
             await newProduct.save();
+            
             return res.status(201).json({ data: newProduct });
         } catch (error) {
             if (error.name === 'ValidationError') {
@@ -43,6 +48,7 @@ module.exports = {
             return res.status(500).json({ message: 'Internal Server Error', error: error });
         }
     },
+    
     
 
     // Actualizar un producto por ID
