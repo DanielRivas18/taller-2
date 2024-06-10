@@ -11,6 +11,6 @@ app.use(express.json())
 
 app.set('PORT',process.env.PORT || 3000 )
 
-app.use('/products', require('./routes/routes-products'))
+app.use('/api/products', require('./routes/routes-products'))
 
 app.listen(app.get('PORT'),()=>console.log(`Server Ready al port ${app.get('PORT')}`))
