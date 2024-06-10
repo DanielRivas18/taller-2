@@ -31,7 +31,7 @@ module.exports = {
             const lastProduct = await Product.findOne().sort({ id: -1 });
             let newId = 1; // Inicializa el nuevo id en 1 si no hay productos existentes
             if (lastProduct) {
-                newId = lastProduct.id + 1;
+                newId = parseInt(lastProduct.id) + 1; // Parsea el id como un número antes de incrementarlo
             }
     
             // Crea un nuevo objeto de producto con el nuevo id y los datos del cuerpo de la solicitud
@@ -48,6 +48,7 @@ module.exports = {
             return res.status(500).json({ message: 'Internal Server Error', error: error });
         }
     },
+    
     
     
 
