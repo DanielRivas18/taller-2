@@ -15,6 +15,6 @@ app.use('/api/products', require('./routes/routes-products'))
 
 const swaggerUI = require('swagger-ui-express')
 const swaggerSpec = require('./swagger')
-app.use('/docs/api/products', swaggerUI.serve, swaggerUI.setup(swaggerSpec))
+app.use('/docs', swaggerUI.serve, swaggerUI.setup(swaggerSpec))
 
 app.listen(app.get('PORT'), () => console.log(`Server Ready al port ${app.get('PORT')}`))
