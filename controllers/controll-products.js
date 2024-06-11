@@ -87,10 +87,10 @@ module.exports = {
             let product;
 
             if (id) {
-
+                // Buscar el producto por ID
                 product = await Product.findById(id);
             } else if (nombre) {
-
+                // Buscar el producto por nombre
                 product = await Product.findOne({ nombre });
             }
 
@@ -98,27 +98,18 @@ module.exports = {
                 return res.status(404).json({ message: 'Producto no encontrado' });
             }
 
-
+            // Verificar si hay suficiente inventario
             if (product.inventario < cantidad) {
                 return res.status(400).json({ message: 'Inventario insuficiente' });
             }
 
-            inventario
+            // Reducir el inventario
             product.inventario -= cantidad;
 
-
+            // Guardar el producto actualizado
             await product.save();
 
             return res.status(200).json({ message: 'Producto vendido', data: product });
-        } catch (error) {
-            return res.status(500).json({ err: error.message });
-        }
-    },
-    searchByName: async (req, res) => {
-        try {
-            const { nombre } = req.query;
-            const productos = await Product.find({ nombre: { $regex: new RegExp(nombre, 'i') } });
-            return res.status(200).json({ data: productos });
         } catch (error) {
             return res.status(500).json({ err: error.message });
         }

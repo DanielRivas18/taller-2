@@ -178,10 +178,10 @@ routes.delete('/:id', deleteProduct);
  *             properties:
  *               id:
  *                 type: string
- *                 description: ID del producto a vender.
+ *                 description: ID del producto a vender. (Opcional, usar si el producto se identifica por ID)
  *               nombre:
  *                 type: string
- *                 description: Nombre del producto a vender.
+ *                 description: Nombre del producto a vender. (Opcional, usar si el producto se identifica por nombre)
  *               cantidad:
  *                 type: number
  *                 description: Cantidad del producto a vender.
@@ -195,30 +195,8 @@ routes.delete('/:id', deleteProduct);
  *       '500':
  *         description: Error del servidor. No se pudo procesar la venta del producto.
  */
-routes.post('/sell', sellProduct)
+routes.post('/sell', sellProduct);
 
-// Ruta para buscar productos por nombre
-/**
- * @swagger
- * /search:
- *   get:
- *     summary: Buscar productos por nombre
- *     description: Devuelve una lista de productos cuyo nombre coincide con el texto dado.
- *     tags: [Productos]
- *     parameters:
- *       - in: query
- *         name: nombre
- *         required: true
- *         description: Texto para buscar en los nombres de los productos.
- *         schema:
- *           type: string
- *     responses:
- *       '200':
- *         description: OK. Devuelve un array de productos.
- *       '500':
- *         description: Error del servidor. No se pudieron recuperar los productos.
- */
-routes.get('/search', searchByName);
 
-// Exportar rutas
+
 module.exports = routes;
