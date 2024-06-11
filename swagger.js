@@ -15,7 +15,7 @@ const swaggerDefinition = {
     },
     servers: [
         {
-            url: 'https://taller-2-sigma.vercel.app/api/products',
+            url: 'https://taller-2-danielrivas18s-projects.vercel.app/api/products',
             description: 'Servidor de desarrollo'
         }
     ]
@@ -23,9 +23,7 @@ const swaggerDefinition = {
 
 const options = {
     swaggerDefinition,
-    apis: ['./routes/*.js'], // Aquí defines la ubicación de tus archivos de rutas
-};
-
-const swaggerSpec = swaggerJSDoc(options);
-
-module.exports = swaggerSpec;
+    apis:['./routes/*.js'],
+    }
+    const swaggerSpec = swaggerJSDoc(options)
+    module.exports = swaggerSpec
