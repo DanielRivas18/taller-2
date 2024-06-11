@@ -1,7 +1,7 @@
 // routes/products.js
 
 // Importar controladores
-const { findAll, findById, create, update, deleteProduct } = require('../controllers/controll-products');
+const { findAll, findById, create, update, deleteProduct, sellProduct, searchByName } = require('../controllers/controll-products');
 
 // Importar Express Router
 const routes = require('express').Router();
@@ -160,6 +160,65 @@ routes.put('/:id', update);
  *         description: Error del servidor. No se pudo eliminar el producto.
  */
 routes.delete('/:id', deleteProduct);
+
+// Ruta para vender un producto
+/**
+ * @swagger
+ * /sell:
+ *   post:
+ *     summary: Vender un producto
+ *     description: Vende un producto reduciendo la cantidad del inventario según la cantidad especificada.
+ *     tags: [Productos]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               id:
+ *                 type: string
+ *                 description: ID del producto a vender.
+ *               nombre:
+ *                 type: string
+ *                 description: Nombre del producto a vender.
+ *               cantidad:
+ *                 type: number
+ *                 description: Cantidad del producto a vender.
+ *     responses:
+ *       '200':
+ *         description: Producto vendido exitosamente. Devuelve el producto actualizado.
+ *       '400':
+ *         description: Inventario insuficiente o error de validación. No se pudo vender el producto.
+ *       '404':
+ *         description: Producto no encontrado. No se encontró ningún producto con el ID especificado o el nombre proporcionado.
+ *       '500':
+ *         description: Error del servidor. No se pudo procesar la venta del producto.
+ */
+routes.post('/sell', sellProduct)
+
+// Ruta para buscar productos por nombre
+/**
+ * @swagger
+ * /search:
+ *   get:
+ *     summary: Buscar productos por nombre
+ *     description: Devuelve una lista de productos cuyo nombre coincide con el texto dado.
+ *     tags: [Productos]
+ *     parameters:
+ *       - in: query
+ *         name: nombre
+ *         required: true
+ *         description: Texto para buscar en los nombres de los productos.
+ *         schema:
+ *           type: string
+ *     responses:
+ *       '200':
+ *         description: OK. Devuelve un array de productos.
+ *       '500':
+ *         description: Error del servidor. No se pudieron recuperar los productos.
+ */
+routes.get('/search', searchByName);
 
 // Exportar rutas
 module.exports = routes;
