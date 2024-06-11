@@ -27,21 +27,24 @@ module.exports = {
 
     create: async function(req, res) {
         try {
-            // Consulta el último producto para obtener su id y luego incrementa para el nuevo producto
-            const lastProduct = await Product.findOne().sort({ id: -1 });
+            // Consulta el producto con el ID más alto
+            const highestIdProduct = await Product.findOne().sort({ id: -1 });
             let newId = 1; // Inicializa el nuevo id en 1 si no hay productos existentes
-            if (lastProduct) {
-                newId = lastProduct.id + 1; // Parsea el id como un número antes de incrementarlo
+            if (highestIdProduct) {
+                newId = highestIdProduct.id + 1; // Incrementa el id del producto con el ID más alto
             }
-    
+
             // Crea un nuevo objeto de producto con el nuevo id y los datos del cuerpo de la solicitud
             const newProduct = new Product({ id: newId, ...req.body });
-    
+
             // Guarda el nuevo producto en la base de datos
             await newProduct.save();
-            
+
             return res.status(201).json({ data: newProduct });
         } catch (error) {
+            if (error.code === 11000) { // Manejo de error de clave duplicada
+                return res.status(400).json({ message: 'Duplicate ID Error', error: error });
+            }
             if (error.name === 'ValidationError') {
                 return res.status(400).json({ message: 'Validation Error', errors: error.errors });
             }
