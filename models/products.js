@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
 const schemaProducts = new Schema({
-  id: { type: String, required: true, unique: true }, // Asegúrate de que el campo 'id' sea único
+  id: { type: String, required: false, unique: true }, // Asegúrate de que el campo 'id' sea único
   nombre: { type: String, required: true },
   inventario: { type: Number, required: true },
   tipo_producto: { type: String, required: true },
