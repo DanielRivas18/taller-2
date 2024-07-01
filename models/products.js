@@ -3,15 +3,16 @@ const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
 const schemaProducts = new Schema({
-  id: { type: Number, required: true, unique: true }, 
+  id: { type: Number, required: true, unique: true },
   nombre: { type: String, required: true },
   inventario: { type: Number, required: true },
   tipo_producto: { type: String, required: true },
   fecha_vencimiento: { type: Date, default: null },
   precio: { type: Number, required: true },
-  fecha_ingreso: { type: Date, default: Date.now }, 
+  fecha_ingreso: { type: Date, default: Date.now },
   estado_actual: { type: String, default: 'No vencido' }
 });
+
 
 schemaProducts.methods.actualizarEstado = function () {
   const hoy = new Date();
@@ -21,6 +22,7 @@ schemaProducts.methods.actualizarEstado = function () {
     this.estado_actual = 'No vencido';
   }
 };
+
 
 // Middleware para actualizar el estado antes de guardar
 schemaProducts.pre('save', function (next) {
